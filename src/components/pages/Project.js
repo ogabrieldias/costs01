@@ -11,7 +11,7 @@ import Message from '../layout/Message'
 import ProjectForm from '../project/ProjectForm'
 import ServiceForm from '../service/ServiceForm'
 import ServiceCard from '../service/ServiceCard'
-import API_URL from '../../config/api'
+import { getProject, updateProject } from '../../services/firebaseService'
 
 function Project() {
     const { id } = useParams()
@@ -24,20 +24,13 @@ function Project() {
     const [type, setType] = useState()
     
     useEffect(() => {
-        
         setTimeout(() => {
-            fetch(`${API_URL}/projects/${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(resp => resp.json())
+            getProject(id)
             .then((data) => {
-                setProject(data)       
-                setServices(data.services)       
+                setProject(data)
+                setServices(data.services || [])
             })
-            .catch(err => console.log)
+            .catch(err => console.log(err))
         }, 300)
 
     }, [id])
@@ -53,20 +46,12 @@ function Project() {
             return false
         }
 
-        fetch(`${API_URL}/projects/${project.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(project),
-        })
-        .then(resp => resp.json())
+        updateProject(project.id, project)
         .then((data) => {
             setProject(data)
             setShowProjectForm(false)
             setMessage('Projeto atualizado!')
             setType('success')
-            
         })
         .catch(err => console.log(err))
 
@@ -98,18 +83,11 @@ function Project() {
 
 
         // update project
-        fetch(`${API_URL}/projects/${project.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(project)
-        })
-        .then((resp) => resp.json)
+        updateProject(project.id, project)
         .then((data) => {
             // exibir os serviços
             console.log(data)
-        }) 
+        })
         .catch(err => console.log(err))
     }
 
@@ -123,14 +101,7 @@ function Project() {
         projectUpdated.services = servicesUpdated
         projectUpdated.cost = parseFloat(projectUpdated.cost) - parseFloat(cost)
 
-        fetch(`${API_URL}/projects/${projectUpdated.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(projectUpdated)
-        })
-        .then((resp) => resp.json())
+        updateProject(projectUpdated.id, projectUpdated)
         .then((data) => {
             setProject(projectUpdated)
             setServices(servicesUpdated)

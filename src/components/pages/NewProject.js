@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ProjectForm from '../project/ProjectForm'
 
 import styles from './NewProject.module.css'
-import API_URL from '../../config/api'
+import { addProject } from '../../services/firebaseService'
 
 function NewProject () {
     const navigate = useNavigate()
@@ -14,20 +14,11 @@ function NewProject () {
         project.cost = 0
         project.services = []
 
-        fetch(`${API_URL}/projects`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(project)
+        addProject(project)
+        .then((data) => {
+            navigate("/projects", {state: { message: "Projeto criado com sucesso!" }});
         })
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log(data)
-                navigate("/projects", {state: { message: "Projeto criado com sucesso!" }});
-                
-            })
-            .catch(err => console.log(err))
+        .catch(err => console.log(err))
 
     }
 

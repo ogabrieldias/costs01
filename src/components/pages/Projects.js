@@ -9,7 +9,7 @@ import LinkButton from '../layout/LinkButton'
 import ProjectCard from '../project/ProjectCard'
 
 import styles from './Projects.module.css'
-import API_URL from '../../config/api'
+import { getProjects, deleteProject } from '../../services/firebaseService'
 
 
 function Projects () {
@@ -26,15 +26,8 @@ function Projects () {
 
     useEffect (() => {
         setTimeout(() => {
-            fetch(`${API_URL}/projects`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(resp => resp.json())
+            getProjects()
             .then((data) => {
-                console.log(data)
                 setProjects(data)
                 setRemoveLoading(true)
             })
@@ -43,17 +36,10 @@ function Projects () {
     }, [])
 
     function removeProject(id) {
-        fetch(`${API_URL}/projects/${id}`,{
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(resp => resp.json())
+        deleteProject(id)
         .then(() => {
             setProjects(projects.filter((project) => project.id !== id))
             setprojectMessage('Projeto removido com sucesso!') // message
-
         })
         .catch(err => console.log(err))
     }

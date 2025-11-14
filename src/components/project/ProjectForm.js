@@ -5,20 +5,14 @@ import Select from '../form/Select'
 import SubmitButton from '../form/SubmitButton'
 
 import styles from './ProjectForm.module.css'
-import API_URL from '../../config/api'
+import { getCategories } from '../../services/firebaseService'
 
 function ProjectForm ({ handleSubmit, btnText, projectData }) {
     const [categories, setCategories] = useState ([])
     const [project, setProject] = useState (projectData || {})
 
     useEffect(() => {
-        fetch(`${API_URL}/categories`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then((resp) => resp.json())
+        getCategories()
         .then((data) => {
             setCategories(data)
         })
