@@ -8,5 +8,7 @@ const middlewares = jsonServer.defaults();
 server.use(middlewares);
 server.use(router);
 
-// Export Express app compatible with Vercel serverless functions
-module.exports = server;
+// Export handler compatible with Vercel serverless functions
+module.exports = (req, res) => {
+	server(req, res);
+};

@@ -68,3 +68,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Local setup & deployment
+
+Follow these steps to run the project locally and deploy to Vercel or Firebase.
+
+- Setup local env:
+	- Copy `.env.example` to `.env.local` and fill the values (do NOT commit `.env.local`).
+
+- Run locally:
+	- Install dependencies: `npm install`
+	- Start backend (json-server): `npm run backend` (this serves `db.json` on port `5000`)
+	- Start frontend: `npm start` (opens at `http://localhost:3000`)
+
+- Build for production (local test):
+	- `npm run build` (output in `build/`)
+
+- Deploy to Vercel:
+	- Push your changes to GitHub, import the repo in Vercel (if not already), or connect the GitHub repo to Vercel.
+	- Ensure in Vercel **Project Settings → Environment Variables** you add any `REACT_APP_*` variables used (Firebase keys, or `REACT_APP_API_URL` if you prefer to override the default `/api`).
+	- Vercel will run `npm run build` and publish the site; API routes are handled at `/api/*` by the `api/index.js` serverless handler.
+
+- Deploy to Firebase (optional, if you want Firestore + Hosting):
+	- If using Firebase for data, fill the `REACT_APP_FIREBASE_*` vars in Vercel or `.env.local`.
+	- To host frontend on Firebase Hosting, initialize `firebase init hosting` and deploy with `firebase deploy --only hosting` (you will need Firebase CLI and project setup).
+
+If you want, I can push the remaining changes to GitHub for you (you need to provide auth on your machine), or guide you step-by-step to configure Vercel env vars and trigger a deploy.
