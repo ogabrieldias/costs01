@@ -1,5 +1,6 @@
 .container {
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
@@ -18,3 +19,75 @@
 .min-height {
   min-height: 75%;
 }
+
+
+/* Monitores ultrawide (até 1400px) */
+@media (max-width: 1400px) {
+  .container {
+    max-width: 1400px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+/* Desktops grandes (até 1200px) */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+/* Notebooks médios (até 992px) */
+@media (max-width: 992px) {
+  .container {
+    max-width: 992px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+/* Tablets (até 768px) */
+@media (max-width: 768px) {
+  .container {
+    max-width: 768px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+/* Smartphones pequenos (até 411px) */
+@media (max-width: 411px) {
+  .container {
+    max-width: 411px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+/* Smartphones pequenos (até 360px) */
+@media (max-width: 360px) {
+  .container {
+    max-width: 360px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+/* Smartphones pequenos (até 320px) */
+@media (max-width: 320px) {
+  .container {
+    max-width: 320px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
